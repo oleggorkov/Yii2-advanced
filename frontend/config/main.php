@@ -42,12 +42,6 @@ return [
             'rules' => [
             ],
         ],
-       // 'view' => [
-         //   'basePath' => '@app/themes/first',
-           // 'baseUrl' => '@web/themes/first',
-            //'pathMap' => ['@app/views' => '@app/themes/first'
-              //  ],
-        //]
     ],
     'params' => $params,
 ];
