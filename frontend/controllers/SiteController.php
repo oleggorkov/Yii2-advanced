@@ -145,19 +145,9 @@ class SiteController extends Controller
         return $this->render('about');
     }
 
-    /**
-     * Displays hello page
-     *
-     * @return mixed
-     */
     public function actionHello()
     {
         return $this->render('helloWorld');
-    }
-
-    public function actionTaskTracker()
-    {
-        return $this->render('task-tracker');
     }
 
     /**
