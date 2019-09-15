@@ -1,12 +1,11 @@
 <?php
-namespace backend\controllers;
 
+namespace backend\controllers;
 use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
-
 /**
  * Site controller
  */
@@ -19,7 +18,7 @@ class SiteController extends Controller
     {
         return [
             'access' => [
-                'class' => AccessControl::className(),
+                'class' => AccessControl::class,
                 'rules' => [
                     [
                         'actions' => ['login', 'error'],
@@ -28,19 +27,18 @@ class SiteController extends Controller
                     [
                         'actions' => ['logout', 'index'],
                         'allow' => true,
-                        'roles' => ['@'],
+                        'roles' => ['admin'],
                     ],
                 ],
             ],
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'logout' => ['post'],
                 ],
             ],
         ];
     }
-
     /**
      * {@inheritdoc}
      */
@@ -52,7 +50,6 @@ class SiteController extends Controller
             ],
         ];
     }
-
     /**
      * Displays homepage.
      *
@@ -62,7 +59,6 @@ class SiteController extends Controller
     {
         return $this->render('index');
     }
-
     /**
      * Login action.
      *
@@ -73,19 +69,22 @@ class SiteController extends Controller
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
-
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
+//            if (Yii::$app->authManager->checkAccess(Yii::$app->user->getId(), 'admin')) {
             return $this->goBack();
+//            } else {
+//                Yii::$app->user->logout();
+//                Yii::$app->getSession()->setFlash('error', "Вы не администратор.<br> Доступ запрещен!");
+//                return $this->redirect(['site/login']);
+//            }
         } else {
             $model->password = '';
-
             return $this->render('login', [
                 'model' => $model,
             ]);
         }
     }
-
     /**
      * Logout action.
      *
@@ -94,7 +93,6 @@ class SiteController extends Controller
     public function actionLogout()
     {
         Yii::$app->user->logout();
-
         return $this->goHome();
     }
 }
