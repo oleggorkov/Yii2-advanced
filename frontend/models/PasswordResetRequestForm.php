@@ -1,18 +1,15 @@
 <?php
-namespace frontend\models;
 
+namespace frontend\models;
 use Yii;
 use yii\base\Model;
 use common\models\User;
-
 /**
  * Password reset request form
  */
 class PasswordResetRequestForm extends Model
 {
     public $email;
-
-
     /**
      * {@inheritdoc}
      */
@@ -29,11 +26,11 @@ class PasswordResetRequestForm extends Model
             ],
         ];
     }
-
     /**
      * Sends an email with a link, for resetting the password.
      *
      * @return bool whether the email was send
+     * @throws \yii\base\Exception
      */
     public function sendEmail()
     {
@@ -42,18 +39,16 @@ class PasswordResetRequestForm extends Model
             'status' => User::STATUS_ACTIVE,
             'email' => $this->email,
         ]);
-
         if (!$user) {
             return false;
         }
-        
+
         if (!User::isPasswordResetTokenValid($user->password_reset_token)) {
             $user->generatePasswordResetToken();
             if (!$user->save()) {
                 return false;
             }
         }
-
         return Yii::$app
             ->mailer
             ->compose(
