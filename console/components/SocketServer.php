@@ -1,6 +1,5 @@
 <?php
 
-
 namespace console\components;
 use common\models\ChatLog;
 use Ratchet\ConnectionInterface;

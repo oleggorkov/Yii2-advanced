@@ -1,8 +1,14 @@
 <?php
+
 namespace backend\controllers;
+use common\models\Project;
+use common\models\User;
 use Yii;
 use common\models\Task;
 use backend\models\TaskSearch;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -17,6 +23,14 @@ class TaskController extends Controller
     public function behaviors()
     {
         return [
+            'timestampBehavior' => [
+                'class' => TimestampBehavior::class,
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                    'value' => time(),
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::class,
                 'actions' => [
@@ -63,6 +77,10 @@ class TaskController extends Controller
         }
         return $this->render('create', [
             'model' => $model,
+            'authors' => ArrayHelper::map(
+                User::getActiveUsers(), 'id', 'email'),
+            'projects' => ArrayHelper::map(
+                Project::getActiveProjects(), 'id', 'title'),
         ]);
     }
     /**
@@ -80,6 +98,10 @@ class TaskController extends Controller
         }
         return $this->render('update', [
             'model' => $model,
+            'authors' => ArrayHelper::map(
+                User::getActiveUsers(), 'id', 'email'),
+            'projects' => ArrayHelper::map(
+                Project::getActiveProjects(), 'id', 'title'),
         ]);
     }
     /**

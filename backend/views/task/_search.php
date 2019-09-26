@@ -1,4 +1,5 @@
 <?php
+
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
@@ -19,7 +20,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'description') ?>
 
-    <?= $form->field($model, 'creator_id') ?>
+    <?= $form->field($model, 'project_id') ?>
+
+    <?= $form->field($model, 'author_id') ?>
 
     <?= $form->field($model, 'worker_id') ?>
 

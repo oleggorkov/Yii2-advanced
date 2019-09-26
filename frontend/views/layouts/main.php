@@ -35,7 +35,8 @@ AppAsset::register($this);
         ]);
         $menuItems = [
             ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'Task tracker', 'url' => ['/task-tracker/index']],
+            ['label' => 'Projects', 'url' => ['/project/index']],
+            ['label' => 'Chat', 'url' => ['/chat/index']],
             ['label' => 'About', 'url' => ['/site/about']],
             ['label' => 'Contact', 'url' => ['/site/contact']],
             ['label' => 'Only Admin', 'url' => ['/site/only-admin']],

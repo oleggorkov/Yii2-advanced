@@ -1,9 +1,12 @@
 <?php
 
 namespace backend\controllers;
+use backend\models\TaskSearch;
 use Yii;
 use common\models\Project;
 use backend\models\ProjectSearch;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -47,8 +50,12 @@ class ProjectController extends Controller
      */
     public function actionView($id)
     {
+        $taskSearchModel = new TaskSearch();
+        $taskDataProvider = $taskSearchModel->search(Yii::$app->request->queryParams);
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'taskSearchModel' => $taskSearchModel,
+            'taskDataProvider' => $taskDataProvider
         ]);
     }
     /**

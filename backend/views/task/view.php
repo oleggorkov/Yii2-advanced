@@ -1,5 +1,6 @@
 <?php
 
+use common\models\Task;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 /* @var $this yii\web\View */
@@ -30,15 +31,52 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'title',
             'description:ntext',
-            'creator_id',
+            'project_id',
+            [
+                'attribute' => 'authorEmail',
+                'label' => 'Email Автора',
+                'value' => function(Task $model) {
+                    return $model->author->username;
+                }
+            ],
             'worker_id',
-            'deadLine_date',
-            'start_date',
-            'end_date',
+            [
+                'attribute'=>'deadLine_date',
+                'format' => 'raw',
+                'value'=>function($model) {
+                    return Yii::$app->formatter->asDatetime($model->deadLine_date, 'php:d.M.Y');
+                }
+            ],
+            [
+                'attribute'=>'start_date',
+                'format' => 'raw',
+                'label'=>'Дата начала выполнения задачи',
+                'value'=>function($model) {
+                    return Yii::$app->formatter->asDatetime($model->start_date, 'php:d.M.Y');
+                }
+            ],
+            [
+                'attribute'=>'end_date',
+                'format' => 'raw',
+                'label'=>'Дата окончания выполнения задачи',
+                'value'=>function($model) {
+                    return Yii::$app->formatter->asDatetime($model->end_date, 'php:d.M.Y');
+                }
+            ],
             'status_id',
             'priority_id',
-            'created_at',
-            'updated_at',
+            [
+                'attribute' => 'created_at',
+                'value' => function ($model) {
+                    return Yii::$app->formatter->asDate($model->created_at, 'php:d.M.Y');
+                }
+            ],
+            [
+                'attribute' => 'updated_at',
+                'value' => function ($model) {
+                    return Yii::$app->formatter->asDate($model->updated_at, 'php:d.M.Y');
+                }
+            ]
         ],
     ]) ?>
 

@@ -9,14 +9,18 @@ use common\models\Project;
  */
 class ProjectSearch extends Project
 {
+    public $authorEmail;
+    public $projectName;
+    public $workerEmail;
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['id', 'user_id', 'project_status_id', 'created_at', 'updated_at'], 'integer'],
+            [['id', 'author_id', 'project_status_id', 'created_at', 'updated_at'], 'integer'],
             [['title'], 'safe'],
+            [['authorEmail', 'projectName', 'workerEmail'], 'string'],
         ];
     }
     /**
@@ -50,12 +54,15 @@ class ProjectSearch extends Project
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'user_id' => $this->user_id,
+            'author_id' => $this->author_id,
             'project_status_id' => $this->project_status_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);
         $query->andFilterWhere(['like', 'title', $this->title]);
+        $query->andFilterWhere(['like', 'title', $this->authorEmail]);
+        $query->andFilterWhere(['like', 'title', $this->projectName]);
+        $query->andFilterWhere(['like', 'title', $this->workerEmail]);
         return $dataProvider;
     }
 }

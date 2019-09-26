@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b321ec2da9fc955924d5bdecee5a2a82",
+    "content-hash": "e20925e1b24562d314cf4db6f2601877",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -689,6 +689,112 @@
                 "url"
             ],
             "time": "2019-07-01T23:21:34+00:00"
+        },
+        {
+            "name": "kartik-v/yii2-krajee-base",
+            "version": "v2.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kartik-v/yii2-krajee-base.git",
+                "reference": "9ddb662bdf49fdb671a90853912a40418a26a0dd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kartik-v/yii2-krajee-base/zipball/9ddb662bdf49fdb671a90853912a40418a26a0dd",
+                "reference": "9ddb662bdf49fdb671a90853912a40418a26a0dd",
+                "shasum": ""
+            },
+            "suggest": {
+                "yiisoft/yii2-bootstrap": "for Krajee extensions to work with Bootstrap 3.x version",
+                "yiisoft/yii2-bootstrap4": "for Krajee extensions to work with Bootstrap 4.x version"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "kartik\\base\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Kartik Visweswaran",
+                    "email": "kartikv2@gmail.com",
+                    "homepage": "http://www.krajee.com/"
+                }
+            ],
+            "description": "Base library and foundation components for all Yii2 Krajee extensions.",
+            "homepage": "https://github.com/kartik-v/yii2-krajee-base",
+            "keywords": [
+                "base",
+                "extension",
+                "foundation",
+                "krajee",
+                "widget",
+                "yii2"
+            ],
+            "time": "2019-03-13T17:14:54+00:00"
+        },
+        {
+            "name": "kartik-v/yii2-widget-datepicker",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kartik-v/yii2-widget-datepicker.git",
+                "reference": "d75bfb12918b29902d96ecf8decd7e40b007d77f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-datepicker/zipball/d75bfb12918b29902d96ecf8decd7e40b007d77f",
+                "reference": "d75bfb12918b29902d96ecf8decd7e40b007d77f",
+                "shasum": ""
+            },
+            "require": {
+                "kartik-v/yii2-krajee-base": ">=2.0.0"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.4.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "kartik\\date\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Kartik Visweswaran",
+                    "email": "kartikv2@gmail.com",
+                    "homepage": "http://www.krajee.com/"
+                }
+            ],
+            "description": "Enhanced Yii2 wrapper for the bootstrap datepicker plugin (sub repo split from yii2-widgets).",
+            "homepage": "https://github.com/kartik-v/yii2-widget-datepicker",
+            "keywords": [
+                "date",
+                "extension",
+                "form",
+                "jquery",
+                "picker",
+                "plugin",
+                "select2",
+                "widget",
+                "yii2"
+            ],
+            "time": "2019-08-23T17:23:20+00:00"
         },
         {
             "name": "psr/http-message",
@@ -1688,16 +1794,16 @@
         },
         {
             "name": "yiisoft/yii2",
-            "version": "2.0.26",
+            "version": "2.0.27",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-framework.git",
-                "reference": "5ca9036dd6eb75354fbd287cc57f79ca861fb7f1"
+                "reference": "6793f8f9b4cd891dbf475cfbb88cf480f74eaa85"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/5ca9036dd6eb75354fbd287cc57f79ca861fb7f1",
-                "reference": "5ca9036dd6eb75354fbd287cc57f79ca861fb7f1",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/6793f8f9b4cd891dbf475cfbb88cf480f74eaa85",
+                "reference": "6793f8f9b4cd891dbf475cfbb88cf480f74eaa85",
                 "shasum": ""
             },
             "require": {
@@ -1784,7 +1890,7 @@
                 "framework",
                 "yii2"
             ],
-            "time": "2019-09-03T21:38:33+00:00"
+            "time": "2019-09-18T13:04:16+00:00"
         },
         {
             "name": "yiisoft/yii2-bootstrap",
@@ -3110,16 +3216,16 @@
         },
         {
             "name": "phpunit/php-token-stream",
-            "version": "3.1.0",
+            "version": "3.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-token-stream.git",
-                "reference": "e899757bb3df5ff6e95089132f32cd59aac2220a"
+                "reference": "995192df77f63a59e47f025390d2d1fdf8f425ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/e899757bb3df5ff6e95089132f32cd59aac2220a",
-                "reference": "e899757bb3df5ff6e95089132f32cd59aac2220a",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/995192df77f63a59e47f025390d2d1fdf8f425ff",
+                "reference": "995192df77f63a59e47f025390d2d1fdf8f425ff",
                 "shasum": ""
             },
             "require": {
@@ -3155,7 +3261,7 @@
             "keywords": [
                 "tokenizer"
             ],
-            "time": "2019-07-25T05:29:42+00:00"
+            "time": "2019-09-17T06:23:10+00:00"
         },
         {
             "name": "phpunit/phpunit",
@@ -4544,16 +4650,16 @@
         },
         {
             "name": "yiisoft/yii2-debug",
-            "version": "2.1.8",
+            "version": "2.1.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-debug.git",
-                "reference": "959bf8206a3ec64f8949f62024a2c58d9a02e78f"
+                "reference": "62679af3183c308c0edffecc69778afc32ae55aa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-debug/zipball/959bf8206a3ec64f8949f62024a2c58d9a02e78f",
-                "reference": "959bf8206a3ec64f8949f62024a2c58d9a02e78f",
+                "url": "https://api.github.com/repos/yiisoft/yii2-debug/zipball/62679af3183c308c0edffecc69778afc32ae55aa",
+                "reference": "62679af3183c308c0edffecc69778afc32ae55aa",
                 "shasum": ""
             },
             "require": {
@@ -4598,7 +4704,7 @@
                 "debugger",
                 "yii2"
             ],
-            "time": "2019-08-20T15:19:56+00:00"
+            "time": "2019-09-18T10:49:01+00:00"
         },
         {
             "name": "yiisoft/yii2-faker",
@@ -4701,7 +4807,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "kartik-v/yii2-widget-datepicker": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

@@ -1,6 +1,6 @@
 <?php
-namespace frontend\controllers;
 
+namespace frontend\controllers;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
@@ -14,7 +14,7 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
-
+use common\models\User;
 /**
  * Site controller
  */
@@ -27,30 +27,33 @@ class SiteController extends Controller
     {
         return [
             'access' => [
-                'class' => AccessControl::className(),
-                'only' => ['logout', 'signup'],
+                'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['signup'],
+                        'actions' => ['login', 'signup'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['logout', 'index', 'contact', 'about'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['only-admin', 'add-admin'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
                 ],
             ],
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'logout' => ['post'],
                 ],
             ],
         ];
     }
-
     /**
      * {@inheritdoc}
      */
@@ -66,7 +69,6 @@ class SiteController extends Controller
             ],
         ];
     }
-
     /**
      * Displays homepage.
      *
@@ -76,7 +78,6 @@ class SiteController extends Controller
     {
         return $this->render('index');
     }
-
     /**
      * Logs in a user.
      *
@@ -87,19 +88,16 @@ class SiteController extends Controller
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
-
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         } else {
             $model->password = '';
-
             return $this->render('login', [
                 'model' => $model,
             ]);
         }
     }
-
     /**
      * Logs out the current user.
      *
@@ -108,10 +106,36 @@ class SiteController extends Controller
     public function actionLogout()
     {
         Yii::$app->user->logout();
-
         return $this->goHome();
     }
-
+    public function actionOnlyAdmin()
+    {
+        return $this->render('only-admin');
+    }
+    /**
+     * @throws \yii\base\Exception
+     */
+    public function actionAddAdmin() {
+        $user = User::find()->where(['username' => 'admin'])->one();
+        if (empty($user)) {
+            $user = new User();
+            $user->username = 'admin';
+            $user->email = 'admin@admin.ru';
+            $user->setPassword('admin');
+            $user->generateAuthKey();
+            if ($user->save()) {
+                echo 'good';
+//                $adminRole = Yii::$app->authManager->getRole('admin');
+//                Yii::$app->authManager->assign($adminRole, $user->id);
+            } else {
+                var_dump($user->errors);
+            }
+        } else {
+//            $adminRole = Yii::$app->authManager->getRole('admin');
+//            Yii::$app->authManager->assign($adminRole, $user->id);
+            echo 'админ уже есть';
+        }
+    }
     /**
      * Displays contact page.
      *
@@ -126,7 +150,6 @@ class SiteController extends Controller
             } else {
                 Yii::$app->session->setFlash('error', 'There was an error sending your message.');
             }
-
             return $this->refresh();
         } else {
             return $this->render('contact', [
@@ -134,7 +157,6 @@ class SiteController extends Controller
             ]);
         }
     }
-
     /**
      * Displays about page.
      *
@@ -144,30 +166,27 @@ class SiteController extends Controller
     {
         return $this->render('about');
     }
-
-    public function actionHello()
-    {
-        return $this->render('helloWorld');
-    }
-
     /**
      * Signs user up.
      *
      * @return mixed
+     * @throws \yii\base\Exception
      */
     public function actionSignup()
     {
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
+//            if ($user = $model->signup()) {
+//                if (Yii::$app->getUser()->login($user)) {
             Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
             return $this->goHome();
+//                }
+//            }
         }
-
         return $this->render('signup', [
             'model' => $model,
         ]);
     }
-
     /**
      * Requests password reset.
      *
@@ -179,18 +198,15 @@ class SiteController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {
                 Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
-
                 return $this->goHome();
             } else {
                 Yii::$app->session->setFlash('error', 'Sorry, we are unable to reset password for the provided email address.');
             }
         }
-
         return $this->render('requestPasswordResetToken', [
             'model' => $model,
         ]);
     }
-
     /**
      * Resets password.
      *
@@ -205,18 +221,14 @@ class SiteController extends Controller
         } catch (InvalidArgumentException $e) {
             throw new BadRequestHttpException($e->getMessage());
         }
-
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
             Yii::$app->session->setFlash('success', 'New password saved.');
-
             return $this->goHome();
         }
-
         return $this->render('resetPassword', [
             'model' => $model,
         ]);
     }
-
     /**
      * Verify email address
      *
@@ -237,11 +249,9 @@ class SiteController extends Controller
                 return $this->goHome();
             }
         }
-
         Yii::$app->session->setFlash('error', 'Sorry, we are unable to verify your account with provided token.');
         return $this->goHome();
     }
-
     /**
      * Resend verification email
      *
@@ -257,7 +267,6 @@ class SiteController extends Controller
             }
             Yii::$app->session->setFlash('error', 'Sorry, we are unable to resend verification email for the provided email address.');
         }
-
         return $this->render('resendVerificationEmail', [
             'model' => $model
         ]);

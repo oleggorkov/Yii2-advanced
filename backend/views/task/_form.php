@@ -1,67 +1,83 @@
 <?php
+
+use common\models\Project;
+use common\models\Task;
+use common\models\TaskPriority;
+use common\models\TaskStatus;
+use common\models\User;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
-use yii\bootstrap\ActiveForm;
-use common\models\LoginForm;
+use yii\widgets\ActiveForm;
+use kartik\date\DatePicker;
 /* @var $this yii\web\View */
-/* @var $form yii\bootstrap\ActiveForm */
-/* @var $model LoginForm */
-$this->title = 'Sign In';
-$fieldOptions1 = [
-    'options' => ['class' => 'form-group has-feedback'],
-    'inputTemplate' => "{input}<span class='glyphicon glyphicon-envelope form-control-feedback'></span>"
-];
-$fieldOptions2 = [
-    'options' => ['class' => 'form-group has-feedback'],
-    'inputTemplate' => "{input}<span class='glyphicon glyphicon-lock form-control-feedback'></span>"
-];
+/* @var $model common\models\Task */
+/* @var $form yii\widgets\ActiveForm */
+/* @var $authors User[]*/
+/* @var $projects Project[]*/
 ?>
 
-<div class="login-box">
-    <div class="login-logo">
-        <a href="#"><b>Admin</b>LTE</a>
+<div class="task-form">
+
+    <?php $form = ActiveForm::begin(); ?>
+
+    <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
+
+    <?= $form->field($model, 'project_id')->dropDownList($projects) ?>
+
+    <?= $form->field($model, 'author_id')->dropDownList($authors) ?>
+
+    <?= $form->field($model, 'worker_id')->dropDownList($authors) ?>
+
+    <?= $form->field($model, 'deadLine_date')->widget(\kartik\date\DatePicker::class, [
+        'options' => [
+            'placeholder' => 'Дата окончания срока выполнения',
+            'value' => !$model->isNewRecord ? Yii::$app->formatter->asDate($model->deadLine_date, 'php:d.M.Y') : null,
+        ],
+        'pluginOptions' => [
+            'autoclose' => true,
+            'todayHighlight' => true,
+            'format' => 'dd.mm.yyyy',
+        ]
+    ]); ?>
+
+    <?= $form->field($model, 'start_date')->widget(\kartik\date\DatePicker::class, [
+        'options' => [
+            'placeholder' => 'Дата начала выполнения задачи',
+            'value' => !$model->isNewRecord ? Yii::$app->formatter->asDate($model->start_date, 'php:d.M.Y') : null,
+        ],
+        'pluginOptions' => [
+            'autoclose' => true,
+            'todayHighlight' => true,
+            'format' => 'dd.mm.yyyy',
+        ]
+    ]); ?>
+
+    <?= $form->field($model, 'end_date')->widget(\kartik\date\DatePicker::class, [
+        'options' => [
+            'placeholder' => 'Дата окончания выполнения задачи',
+            'value' => !$model->isNewRecord ? Yii::$app->formatter->asDate($model->end_date, 'php:d.M.Y') : null,
+        ],
+        'pluginOptions' => [
+            'autoclose' => true,
+            'todayHighlight' => true,
+            'format' => 'dd.mm.yyyy',
+        ]
+    ]); ?>
+
+    <?= $form->field($model, 'status_id')->dropDownList(TaskStatus::getStatusName()) ?>
+
+    <?= $form->field($model, 'priority_id')->dropDownList(TaskPriority::getPriorityName()) ?>
+
+    <? $form->field($model, 'created_at')->textInput() ?>
+
+    <? $form->field($model, 'updated_at')->textInput() ?>
+
+    <div class="form-group">
+        <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
     </div>
-    <!-- /.login-logo -->
-    <div class="login-box-body">
-        <p class="login-box-msg">Sign in to start your session</p>
 
-        <?php $form = ActiveForm::begin(['id' => 'login-form', 'enableClientValidation' => false]); ?>
+    <?php ActiveForm::end(); ?>
 
-        <?= $form
-            ->field($model, 'username', $fieldOptions1)
-            ->label(false)
-            ->textInput(['placeholder' => $model->getAttributeLabel('username')]) ?>
-
-        <?= $form
-            ->field($model, 'password', $fieldOptions2)
-            ->label(false)
-            ->passwordInput(['placeholder' => $model->getAttributeLabel('password')]) ?>
-
-        <div class="row">
-            <div class="col-xs-8">
-                <?= $form->field($model, 'rememberMe')->checkbox() ?>
-            </div>
-            <!-- /.col -->
-            <div class="col-xs-4">
-                <?= Html::submitButton('Sign in', ['class' => 'btn btn-primary btn-block btn-flat', 'name' => 'login-button']) ?>
-            </div>
-            <!-- /.col -->
-        </div>
-
-
-        <?php ActiveForm::end(); ?>
-
-        <div class="social-auth-links text-center">
-            <p>- OR -</p>
-            <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in
-                using Facebook</a>
-            <a href="#" class="btn btn-block btn-social btn-google-plus btn-flat"><i class="fa fa-google-plus"></i> Sign
-                in using Google+</a>
-        </div>
-        <!-- /.social-auth-links -->
-
-        <a href="#">I forgot my password</a><br>
-        <a href="register.html" class="text-center">Register a new membership</a>
-
-    </div>
-    <!-- /.login-box-body -->
-</div><!-- /.login-box -->
+</div>

@@ -1,5 +1,6 @@
 <?php
 
+use common\models\Project;
 use yii\helpers\Html;
 use yii\grid\GridView;
 /* @var $this yii\web\View */
@@ -24,11 +25,27 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             'id',
-            'title',
-            'user_id',
-            'project_status_id',
-            'created_at',
-            //'updated_at',
+            [
+                'attribute' => 'title',
+                'format' => 'raw',
+                'value' => function(\common\models\Project $model) {
+                    return Html::a($model->title, ['project/view', 'id' => $model->id]);
+                }
+            ],
+            [
+                'attribute' => 'author_id',
+                'value' => function(Project $model) {
+                    return $model->author->email;
+                }
+            ],
+            [
+                'attribute' => 'project_status_id',
+                'value' => function(Project $model) {
+                    return $model->projectStatus->title;
+                }
+            ],
+            'created_at:datetime',
+            //'updated_at:datetime',
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
