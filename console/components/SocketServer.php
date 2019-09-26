@@ -24,8 +24,9 @@ class SocketServer implements MessageComponentInterface
     {
         $chatLogs = ChatLog::find()->all();
         foreach ($chatLogs as $log) {
+            $log->created_at = \Yii::$app->formatter->asDatetime($log->created_at);
+//            $msg['date']=\Yii::$app->formatter->asDatetime();
             $msg = json_encode($log->attributes);
-            $msg['created_at'] = \Yii::$app->formatter->asDatetime($log->created_at);
             $conn->send($msg);
         }
     }

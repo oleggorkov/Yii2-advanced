@@ -60,9 +60,9 @@ class ProjectSearch extends Project
             'updated_at' => $this->updated_at,
         ]);
         $query->andFilterWhere(['like', 'title', $this->title]);
-        $query->andFilterWhere(['like', 'title', $this->authorEmail]);
+        $query->andFilterWhere(['like', 'email', $this->authorEmail]);
         $query->andFilterWhere(['like', 'title', $this->projectName]);
-        $query->andFilterWhere(['like', 'title', $this->workerEmail]);
+        $query->andFilterWhere(['like', 'email', $this->workerEmail]);
         return $dataProvider;
     }
 }
