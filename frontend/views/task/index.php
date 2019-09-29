@@ -23,22 +23,24 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            'id',
+//            'id',
             'title',
             'description:ntext',
             'author_id',
             'worker_id',
-            //'deadLine_date',
-            //'start_date',
-            //'end_date',
-            //'status_id',
-            //'priority_id',
+            'deadLine_date',
+            'start_date',
+            'end_date',
+            'status_id',
+            'priority_id',
             //'created_at',
             //'updated_at',
-            //'project_id',
+            'project_id',
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
+
+    <?=\common\widgets\chatWidget\ChatWidget::widget();?>
 
 
 </div>

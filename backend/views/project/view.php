@@ -58,7 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'title',
             'description:ntext',
             [
-                'attribute' => 'projectName',
+                'attribute' => 'projectTitile',
                 'value' => function(Task $model) {
                     return $model->project->title;
                 }

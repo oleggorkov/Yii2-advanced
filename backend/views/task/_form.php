@@ -12,7 +12,7 @@ use kartik\date\DatePicker;
 /* @var $this yii\web\View */
 /* @var $model common\models\Task */
 /* @var $form yii\widgets\ActiveForm */
-/* @var $authors User[]*/
+/* @var $activeUsers User[]*/
 /* @var $projects Project[]*/
 ?>
 
@@ -26,9 +26,9 @@ use kartik\date\DatePicker;
 
     <?= $form->field($model, 'project_id')->dropDownList($projects) ?>
 
-    <?= $form->field($model, 'author_id')->dropDownList($authors) ?>
+    <?= $form->field($model, 'author_id')->dropDownList($activeUsers) ?>
 
-    <?= $form->field($model, 'worker_id')->dropDownList($authors) ?>
+    <?= $form->field($model, 'worker_id')->dropDownList($activeUsers) ?>
 
     <?= $form->field($model, 'deadLine_date')->widget(\kartik\date\DatePicker::class, [
         'options' => [
@@ -66,9 +66,9 @@ use kartik\date\DatePicker;
         ]
     ]); ?>
 
-    <?= $form->field($model, 'status_id')->dropDownList(TaskStatus::getStatusName()) ?>
+    <?= $form->field($model, 'status_id')->dropDownList(TaskStatus::getStatusTitle()) ?>
 
-    <?= $form->field($model, 'priority_id')->dropDownList(TaskPriority::getPriorityName()) ?>
+    <?= $form->field($model, 'priority_id')->dropDownList(TaskPriority::getPriorityTitle()) ?>
 
     <? $form->field($model, 'created_at')->textInput() ?>
 

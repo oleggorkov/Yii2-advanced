@@ -3,13 +3,19 @@
 namespace common\models;
 use Yii;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
 /**
  * This is the model class for table "chat_log".
  *
  * @property int $id
+ * @property int $project_id
+ * @property int $task_id
  * @property string $username
  * @property string $message
+ * @property \yii\db\ActiveQuery $project
+ * @property \yii\db\ActiveQuery $task
  * @property string $created_at
+ * @mixin TimestampBehavior
  */
 class ChatLog extends \yii\db\ActiveRecord
 {
@@ -26,7 +32,9 @@ class ChatLog extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['username', 'message', 'created_at'], 'string', 'max' => 255],
+            [['project_id', 'task_id'], 'integer'],
+            ['created_at', 'safe'],
+            [['username', 'message'], 'string', 'max' => 255],
         ];
     }
     public function behaviors()
@@ -34,6 +42,7 @@ class ChatLog extends \yii\db\ActiveRecord
         return [
             'class' => TimestampBehavior::class,
             'createdAtAttribute' => 'created_at',
+            'updatedAtAttribute' => false,
             'value' => time(),
         ];
     }
@@ -49,26 +58,56 @@ class ChatLog extends \yii\db\ActiveRecord
             'created_at' => 'Создано',
         ];
     }
-    public static function saveLog(string $msg)
+    /**
+     * @param array $msg
+     * @return bool
+     */
+    public static function saveLog(array $msg)
     {
         try {
-            $model = new self(json_decode($msg, true));
-            $model->created_at = time();
-            $model->save();
+            if (empty($msg['username'])) {
+                return true;
+            }
+            $model = new ChatLog();
+            $model->username = $msg['username'];
+            $model->message = $msg['message'];
+            $model->project_id = $msg['project_id'] ?? null;
+            $model->task_id = $msg['task_id'] ?? null;
+            return $model->save();
         } catch (\Throwable $exception) {
             Yii::error($exception->getMessage());
+            return false;
         }
     }
-    public  static function sendChat(string $msg)
+    public function toJson()
     {
-        try {
-            $model = new self();
-            $model->username = Yii::$app->user->identity->username;
-            $model->message = $msg;
-            $model->created_at = time();
-            $model->save();
-        } catch (\Throwable $exception) {
-            Yii::error($exception->getMessage());
-        }
+        return json_encode($this->toArray());
+    }
+    public function fields()
+    {
+        return array_merge(parent::fields(), [
+            'created_datetime' => function () {
+                return Yii::$app->formatter->asDatetime($this->created_at);
+            }
+        ]);
+    }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTask()
+    {
+        return $this->hasOne(Task::class, ['id' => 'task_id']);
+    }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProject()
+    {
+        return $this->hasOne(Project::class, ['id' => 'project_id']);
+    }
+    public static function fromJson(string $json)
+    {
+        $json = json_decode($json, true);
+        return new static($json);
     }
 }

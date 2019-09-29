@@ -43,6 +43,9 @@ class ProjectSearch extends Project
         // add conditions that should always apply here
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pageSize' => 5,
+            ],
         ]);
         $this->load($params);
         if (!$this->validate()) {
@@ -59,8 +62,8 @@ class ProjectSearch extends Project
             'updated_at' => $this->updated_at,
         ]);
         $query->andFilterWhere(['like', 'title', $this->title]);
-        $query->andFilterWhere(['like', 'email', $this->authorEmail]);
-        $query->andFilterWhere(['like', 'email', $this->workerEmail]);
+        $query->andFilterWhere(['like', 'user.email', $this->authorEmail]);
+        $query->andFilterWhere(['like', 'user.email', $this->workerEmail]);
         return $dataProvider;
     }
 }

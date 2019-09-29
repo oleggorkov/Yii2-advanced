@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'project_status_id',
                 'filter' => ArrayHelper::map(Project::find()->asArray()->all(), 'id', 'title'),
                 'value' => function(\common\models\Project $model) {
-                    return \common\models\ProjectStatus::getProjectStatusName()[$model->project_status_id];
+                    return \common\models\ProjectStatus::getProjectStatusTitle()[$model->project_status_id];
                 }
             ],
             [
@@ -65,7 +65,6 @@ $this->params['breadcrumbs'][] = $this->title;
             //'updated_at',
         ],
     ]); ?>
-
-
+    <?= \common\widgets\chatWidget\ChatWidget::widget(['project_id' => $model->id]);?>
 
 </div>

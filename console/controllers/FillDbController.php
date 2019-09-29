@@ -9,7 +9,7 @@ class FillDbController extends Controller
 {
     public function actionInitFill()
     {
-        foreach (TaskStatus::getStatusName() as $id => $title) {
+        foreach (TaskStatus::getStatusTitle() as $id => $title) {
             $taskStatus = TaskStatus::findOne($id);
             if (!isset($taskStatus)) {
                 $taskStatus = new TaskStatus();
@@ -24,7 +24,7 @@ class FillDbController extends Controller
                 die();
             }
         }
-        foreach (TaskPriority::getPriorityName() as $id => $title) {
+        foreach (TaskPriority::getPriorityTitle() as $id => $title) {
             $taskPriority = TaskPriority::findOne($id);
             if (!isset($taskPriority)) {
                 $taskPriority = new TaskPriority();
@@ -39,7 +39,7 @@ class FillDbController extends Controller
                 die();
             }
         }
-        foreach (ProjectStatus::getProjectStatusName() as $id => $title) {
+        foreach (ProjectStatus::getProjectStatusTitle() as $id => $title) {
             $projectStatus = ProjectStatus::findOne($id);
             if (!isset($projectStatus)) {
                 $projectStatus = new ProjectStatus();

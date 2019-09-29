@@ -9,8 +9,12 @@ return [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
-        'authManager' => [
-            'class' => \yii\rbac\DbManager::class,
+        'formatter' => [
+            'dateFormat' => 'php:d.m.Y',
+            'datetimeFormat' => 'php:d.m.Y H:i:s',
         ],
+//        'authManager' => [
+//            'class' => \yii\rbac\DbManager::class,
+//        ],
     ],
 ];

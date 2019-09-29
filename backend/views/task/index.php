@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'title',
             'description:ntext',
             [
-                'attribute' => 'projectName',
+                'attribute' => 'projectTitle',
                 'label' => 'Проект',
                 'value' => function( Task $model) {
                     if (!empty($model->project)) {
@@ -110,7 +110,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'status_id',
                 'label' => 'Статус',
-                'filter' => TaskStatus::getStatusName(),
+                'filter' => TaskStatus::getStatusTitle(),
                 'value' => function( Task $model) {
                     return $model->status->title;
                 }
@@ -118,7 +118,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'priority_id',
                 'label' => 'Приоритет',
-                'filter' => TaskPriority::getPriorityName(),
+                'filter' => TaskPriority::getPriorityTitle(),
                 'value' => function(Task $model) {
                     return $model->priority->title;
                 }

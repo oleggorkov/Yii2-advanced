@@ -1,11 +1,13 @@
 <?php
 
 use common\models\ProjectStatus;
+use common\models\User;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model common\models\Project */
 /* @var $form yii\widgets\ActiveForm */
+/* @var $activeUsers User[]*/
 ?>
 
 <div class="project-form">
@@ -14,9 +16,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'author_id')->textInput() ?>
+    <?= $form->field($model, 'author_id')->dropDownList($activeUsers) ?>
 
-    <?= $form->field($model, 'project_status_id')->dropDownList(ProjectStatus::getProjectStatusName()) ?>
+    <?= $form->field($model, 'project_status_id')->dropDownList(ProjectStatus::getProjectStatusTitle()) ?>
 
     <? $form->field($model, 'created_at')->textInput() ?>
 

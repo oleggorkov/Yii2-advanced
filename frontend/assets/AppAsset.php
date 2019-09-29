@@ -1,4 +1,5 @@
 <?php
+
 namespace frontend\assets;
 use yii\web\AssetBundle;
 /**
@@ -12,7 +13,6 @@ class AppAsset extends AssetBundle
         'css/site.css',
     ];
     public $js = [
-        'js/chat.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

@@ -10,7 +10,7 @@ use common\models\Task;
 class TaskSearch extends Task
 {
     public $authorEmail;
-    public $projectName;
+    public $projectTitle;
     public $workerEmail;
     /**
      * {@inheritdoc}
@@ -22,7 +22,7 @@ class TaskSearch extends Task
             [['deadLine_date', 'start_date', 'end_date'], 'date', 'format' => 'php:d.M.Y'],
             [['created_at', 'updated_at'], 'date', 'format' => 'php:d.M.Y'],
             [['title', 'description'], 'safe'],
-            [['authorEmail', 'projectName', 'workerEmail'], 'string'],
+            [['authorEmail', 'projectTitle', 'workerEmail'], 'string'],
         ];
     }
     /**
@@ -47,7 +47,7 @@ class TaskSearch extends Task
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => [
-                'pageSize' => 7,
+                'pageSize' => 5,
             ],
         ]);
         $this->load($params);
@@ -102,9 +102,9 @@ class TaskSearch extends Task
         ]);
         $query->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'description', $this->description])
-            ->andFilterWhere(['like', 'user.username', $this->authorEmail])
-            ->andFilterWhere(['like', 'user.username', $this->workerEmail])
-            ->andFilterWhere(['like', 'project.title', $this->projectName]);
+            ->andFilterWhere(['like', 'user.email', $this->authorEmail])
+            ->andFilterWhere(['like', 'user.email', $this->workerEmail])
+            ->andFilterWhere(['like', 'project.title', $this->projectTitle]);
         return $dataProvider;
     }
 }

@@ -31,7 +31,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'title',
             'description:ntext',
-            'project_id',
+            [
+                'attribute' => 'projectTitle',
+                'value' => function(Task $model) {
+                    return $model->project->title;
+                }
+            ],
             [
                 'attribute' => 'authorEmail',
                 'label' => 'Email Автора',
@@ -39,7 +44,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $model->author->username;
                 }
             ],
-            'worker_id',
+            [
+                'attribute' => 'workerEmail',
+                'label' => 'Email Исполнителя',
+                'value' => function(Task $model) {
+                    return $model->worker->email;
+                }
+            ],
             [
                 'attribute'=>'deadLine_date',
                 'format' => 'raw',

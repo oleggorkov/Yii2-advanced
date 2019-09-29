@@ -1,9 +1,11 @@
 <?php
 
-
+use common\models\User;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\Project */
+/* @var $activeUsers \common\models\User[] */
 $this->title = 'Создать проект';
 $this->params['breadcrumbs'][] = ['label' => 'Проекты', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
@@ -14,6 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $this->render('_form', [
         'model' => $model,
+        'activeUsers' => $activeUsers
     ]) ?>
 
 </div>

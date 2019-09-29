@@ -55,7 +55,7 @@ class ProjectStatus extends \yii\db\ActiveRecord
         return $this->hasMany(Project::class,
             ['project_status_id' => 'id']);
     }
-    public static function getProjectStatusName()
+    public static function getProjectStatusTitle()
     {
         return [
             self::IN_PROGRESS_ID => 'В работе',

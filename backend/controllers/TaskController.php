@@ -77,7 +77,7 @@ class TaskController extends Controller
         }
         return $this->render('create', [
             'model' => $model,
-            'authors' => ArrayHelper::map(
+            'activeUsers' => ArrayHelper::map(
                 User::getActiveUsers(), 'id', 'email'),
             'projects' => ArrayHelper::map(
                 Project::getActiveProjects(), 'id', 'title'),
@@ -98,7 +98,7 @@ class TaskController extends Controller
         }
         return $this->render('update', [
             'model' => $model,
-            'authors' => ArrayHelper::map(
+            'activeUsers' => ArrayHelper::map(
                 User::getActiveUsers(), 'id', 'email'),
             'projects' => ArrayHelper::map(
                 Project::getActiveProjects(), 'id', 'title'),

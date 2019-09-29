@@ -44,6 +44,9 @@ class TaskSearch extends Task
         // add conditions that should always apply here
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pageSize' => 5,
+            ],
         ]);
         $this->load($params);
         if (!$this->validate()) {

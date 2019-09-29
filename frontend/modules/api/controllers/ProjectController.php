@@ -1,12 +1,12 @@
 <?php
 
 namespace frontend\modules\api\controllers;
-use common\models\Task;
+use common\models\Project;
 use yii\behaviors\BlameableBehavior;
 use yii\filters\auth\HttpBearerAuth;
 use yii\rest\ActiveController;
 use yii\web\ForbiddenHttpException;
-class TaskController extends ActiveController
+class ProjectController extends ActiveController
 {
     public function behaviors()
     {
@@ -21,9 +21,9 @@ class TaskController extends ActiveController
         if ($action === 'update' || $action==='delete') {
 //        if ($action === 'view') {
             if ($model->author_id !== \Yii::$app->user->id) {
-                throw new ForbiddenHttpException('Нельзя смотреть задачи где вы не являетесь автором');
+                throw new ForbiddenHttpException('Нельзя изменять и удалять проекты, где вы не являетесь автором');
             }
         }
     }
-    public $modelClass = Task::class;
+    public $modelClass = Project::class;
 }

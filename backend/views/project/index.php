@@ -1,6 +1,7 @@
 <?php
 
 use common\models\Project;
+use common\models\ProjectStatus;
 use yii\helpers\Html;
 use yii\grid\GridView;
 /* @var $this yii\web\View */
@@ -33,18 +34,37 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             [
-                'attribute' => 'author_id',
+                'attribute' => 'authorEmail',
+                'label' => 'Автор проекта',
                 'value' => function(Project $model) {
                     return $model->author->email;
                 }
             ],
             [
                 'attribute' => 'project_status_id',
-                'value' => function(Project $model) {
+                'label' => 'Статус проекта',
+                'filter' => ProjectStatus::getProjectStatusTitle(),
+                'value' => function( Project $model) {
                     return $model->projectStatus->title;
                 }
             ],
-            'created_at:datetime',
+            [
+                'attribute' => 'created_at',
+                'filter' => \kartik\date\DatePicker::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'created_at',
+                    'language' => 'ru',
+                    'pluginOptions' => [
+                        'autoclose' => true,
+                        'todayHighlight' => true,
+                        'format' => 'dd.mm.yyyy',
+                    ]
+                ]),
+                'value' => function ($model) {
+                    return Yii::$app->formatter->asDate($model->created_at, 'php:d.M.Y');
+                }
+            ],
+//            'created_at:datetime',
             //'updated_at:datetime',
             ['class' => 'yii\grid\ActionColumn'],
         ],
